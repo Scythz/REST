@@ -22,6 +22,9 @@ public class User implements UserDetails {
     private String name;
 
     @Column
+    private String lastName;
+
+    @Column
     private int age;
 
     @Column
@@ -40,13 +43,22 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String name, int age, String email, String username, String password, Set<Role> roles) {
+    public User(String name, String lastName, int age, String email, String username, String password, Set<Role> roles) {
         this.name = name;
+        this.lastName = lastName;
         this.age = age;
         this.email = email;
         this.username = username;
         this.password = password;
         this.roles = roles;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public int getId() {
@@ -141,5 +153,14 @@ public class User implements UserDetails {
             }
         }
         return false;
+    }
+
+    public String getRolesAsString() {
+        StringBuilder sb = new StringBuilder();
+        for (Role role : roles) {
+            sb.append(role.toString().substring(5));
+            sb.append(" ");
+        }
+        return sb.toString();
     }
 }

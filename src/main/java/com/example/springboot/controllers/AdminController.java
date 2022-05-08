@@ -3,9 +3,12 @@ package com.example.springboot.controllers;
 import com.example.springboot.models.User;
 import com.example.springboot.service.RoleService;
 import com.example.springboot.service.UserService;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 
 @Controller
@@ -21,29 +24,25 @@ public class AdminController {
     }
 
     @GetMapping()
-    public String tableUsers(Model model) {
+    public String tableUsers(Principal principal, Model model) {
+        model.addAttribute("roles", usr.getRoles());
         model.addAttribute("users", us.getAllUsers());
-        return "tableUsers";
+        model.addAttribute("user", us.loadUserByUsername(principal.getName()));
+        model.addAttribute("newUser", new User());
+        return "admin";
     }
 
     @GetMapping("/new")
     public String newUser(Model model) {
         model.addAttribute("roles", usr.getRoles());
         model.addAttribute("user", new User());
-        return "new";
+        return "redirect:/admin";
     }
 
     @PutMapping
     public String create(@ModelAttribute("user") User user, @RequestParam(value = "selectedRoles") String[] roles) {
         us.saveUser(user, roles);
         return "redirect:/admin";
-    }
-
-    @GetMapping("/edit/{id}")
-    public String editUser(@PathVariable("id") int id, Model model) {
-        model.addAttribute("roles", usr.getRoles());
-        model.addAttribute("user", us.getUserById(id));
-        return "edit";
     }
 
     @PutMapping("/edit/{id}")
