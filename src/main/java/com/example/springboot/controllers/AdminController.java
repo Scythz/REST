@@ -25,18 +25,11 @@ public class AdminController {
 
     @GetMapping()
     public String tableUsers(Principal principal, Model model) {
+        model.addAttribute("auUser", us.loadUserByUsername(principal.getName()));
         model.addAttribute("roles", usr.getRoles());
         model.addAttribute("users", us.getAllUsers());
-        model.addAttribute("user", us.loadUserByUsername(principal.getName()));
         model.addAttribute("newUser", new User());
         return "admin";
-    }
-
-    @GetMapping("/new")
-    public String newUser(Model model) {
-        model.addAttribute("roles", usr.getRoles());
-        model.addAttribute("user", new User());
-        return "redirect:/admin";
     }
 
     @PutMapping
