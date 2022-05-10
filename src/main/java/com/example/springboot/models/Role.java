@@ -64,4 +64,8 @@ public class Role implements GrantedAuthority {
     public String getAuthority() {
         return name;
     }
+
+    public String getRoleAsString() {
+        return name.substring(5);
+    }
 }
