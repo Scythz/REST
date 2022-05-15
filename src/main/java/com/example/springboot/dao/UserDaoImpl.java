@@ -42,11 +42,12 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void saveUser(User user, String[] roles) {
+    public User saveUser(User user, String[] roles) {
         for (String role : roles) {
             user.addRole(roleDao.getOrCreateRole(role));
         }
         saveUser(user);
+        return user;
     }
 
     @Override

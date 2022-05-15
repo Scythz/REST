@@ -13,7 +13,7 @@ public interface UserDao {
 
     void saveUser(User user);
 
-    void saveUser(User user, String[] roles);
+    User saveUser(User user, String[] roles);
 
     void updateUser(User updatedUser);
 
