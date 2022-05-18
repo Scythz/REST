@@ -1,122 +1,73 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
-          integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://getbootstrap.com/docs/5.1/examples/navbars/navbar.css">
+    <link rel="stylesheet" href="https://getbootstrap.com/docs/5.1/examples/sidebars/sidebars.css">
+
+    <title>User page</title>
 </head>
-<body>
 
-<!--########################################################-->
-<!--################### MAIN CONTAINER #####################-->
-<!--########################################################-->
 
-<div class="container-fluid">
-    <!--    ################################################-->
-    <!--    #################### HEADER ####################-->
-    <!--    ################################################-->
-    <div class="row">
-        <div class="col-md-12" style="padding: 0; margin: 0">
-            <nav class="navbar static-top navbar-dark bg-dark">
-                <a class="navbar-brand" href="#"
-                   th:utext="'<b>' + ${auUser.getUsername()} + '</b> with roles: ' + ${auUser.getRolesAsString()} ">Current
-                    user</a>
-                <a class="navbar-brand" href="/logout" style="color: darkgray">Logout</a>
-            </nav>
-        </div>
+<body class="d-flex flex-column" style="height: 100vh; margin: 0; padding: 0">
+<div class="col-md-12">
+    <nav class="navbar static-top navbar-dark bg-dark" style="padding: 0; margin: 0; height: 6vh">
+        <a class="navbar-brand" id="navUserEmail">Current
+            user</a>
+        <a class="navbar-brand" href="/logout" style="color: darkgray">Logout</a>
+    </nav>
+</div>
+<div class="d-flex flex-fill">
+    <div class="d-flex flex-column pt-3" style="width: 200px">
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item" id="admin">
+                <a class="nav-link" href="/admin">Admin</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="/user">User</a>
+            </li>
+        </ul>
     </div>
-
-    <!--    #######################################################-->
-    <!--    #######################  BODY  ########################-->
-    <!--    #######################################################-->
-
-
-    <div class="row">
-        <div class="col-md-12" style="padding: 0; margin: 0">
-
-            <div class="row">
-                <div class="col-2" style="padding: 0; margin: 0; padding-left: 15px; padding-top: 15px">
-                    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical"
-                         style="padding: 0; margin: 0">
-                        <a class="nav-link active show" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home"
-                           role="tab" aria-controls="v-pills-home" aria-selected="true">User</a>
-                    </div>
-                </div>
-                <div class="col-10" style="background-color: #fcfcfc; height: 100vh; padding-top: 10px">
-                    <div class="tab-content" id="v-pills-tabContent">
-                        <div class="tab-pane fade active show" id="v-pills-home" role="tabpanel"
-                             aria-labelledby="v-pills-home-tab">
-
-                            <!--                            ############################################################-->
-                            <!--                            #################### USER NAV CONTENT ######################-->
-                            <!--                            ############################################################-->
-
-
-                            <h1 id="nav-tabs">User-information page</h1>
-
-                            <!--                        ############################################-->
-                            <!--                        ################# TABLE ###################-->
-                            <!--                        ############################################-->
-
-                            <h3 style="padding-left: 20px; padding-top: 5px">About user</h3>
-
-                            <div class="col border bg-white">
-                                <table class="table table-striped">
-
-                                    <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
-                                        <th>Age</th>
-                                        <th>Email</th>
-                                        <th>Role</th>
-                                    </tr>
-
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <th scope="row" th:text="${auUser.id}">ID</th>
-                                        <td th:text="${auUser.name}">FirstName</td>
-                                        <td th:text="${auUser.lastName}">LastName</td>
-                                        <td th:text="${auUser.age}">15</td>
-                                        <td th:text="${auUser.username}">user@mail.ru</td>
-                                        <td th:text="${auUser.getRolesAsString()}">Roles</td>
-                                    </tr>
-
-                                    </tbody>
-                                </table>
-
-                            </div>
-
-
-                        </div>
-                    </div>
-                </div>
-
-
-                <!--                            ###################################################-->
-                <!--                            ############### USER NAV CONTENT END ##############-->
-                <!--                            ###################################################-->
-
-
+    <main class="d-flex flex-column bg-light flex-fill">
+        <h1 class="mt-4 ms-4">User information-page</h1>
+        <div class="ms-4 me-4" style="border: 1px solid #DCDFE3">
+            <div class="ps-3 pt-2 pb-1">
+                <h5>About user</h5>
+            </div>
+            <div class="p-3 overflow-auto" style="border-top: 1px solid #DCDFE3; background: white; max-height: 75vh">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Age</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td id="id"></td>
+                        <td id="firstName"></td>
+                        <td id="lastName"></td>
+                        <td id="age"></td>
+                        <td id="username"></td>
+                        <td id="roles"></td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-    </div>
+    </main>
 </div>
 
-
-</div>
-</div>
-</div>
-
-
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
-        crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="/user.js"></script>
+<script src="/navbar.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.List;
 import java.util.Set;
-
-public class RestController {
+@RestController
+public class MainRestController {
 
 
     private final UserService userService;
     private final RoleService roleService;
 
-    public RestController(UserService userService, RoleService roleService) {
+    public MainRestController(UserService userService, RoleService roleService) {
         this.userService = userService;
         this.roleService = roleService;
     }
@@ -55,7 +55,7 @@ public class RestController {
     @PutMapping("/api/admin/")
     public User editUser(@ModelAttribute User user,
                          @RequestParam(value = "selectedRoles", required = false) String[] roles) {
-        return userService.saveUser(user, roles);
+        return userService.updateUser(user, roles);
     }
 
 }

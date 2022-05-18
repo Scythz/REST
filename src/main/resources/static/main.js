@@ -1,13 +1,13 @@
-var users, roles;
+let users, roles;
 
 function searchUser(id) {
-    return users.find(user => user.id == id);
+    return users.find(user => user.id === id);
 }
 
 function editModal(id) {
     let user = searchUser(id);
     $("#editID").val(user.id);
-    $("#editFirstName").val(user.firstName);
+    $("#editFirstName").val(user.name);
     $("#editLastName").val(user.lastName);
     $("#editAge").val(user.age);
     $("#editUsername").val(user.username);
@@ -17,7 +17,7 @@ function editModal(id) {
         $("#editRoles").append(
             "<option value=".concat(role.name,
                 (user.roles.some(r => r.id === role.id) ? " selected" : ""),
-                ">", role.name + "</option>")
+                ">", role.name.slice(5) + "</option>")
         );
     });
 }
@@ -30,12 +30,12 @@ function editSubmit() {
         data: form.serialize(),
         success: function (response) {
             users = users.map(user => {
-                if (user.id == $("#editID").val()) {
+                if (user.id === $("#editID").val()) {
                     user = response;
                 }
                 return user;
             });
-            updateTable();
+            pullData();
         }
     })
 }
@@ -43,7 +43,7 @@ function editSubmit() {
 function deleteModal(id) {
     let user = searchUser(id);
     $("#deleteID").val(user.id);
-    $("#deleteFirstName").val(user.firstName);
+    $("#deleteFirstName").val(user.name);
     $("#deleteLastName").val(user.lastName);
     $("#deleteAge").val(user.age);
     $("#deleteUsername").val(user.username);
@@ -52,7 +52,7 @@ function deleteModal(id) {
         $("#deleteRoles").append(
             "<option value=".concat(role.name,
                 (user.roles.some(r => r.id === role.id) ? " selected" : ""),
-                ">", role.name + "</option>")
+                ">", role.name.slice(5) + "</option>")
         );
     });
 }
@@ -64,8 +64,8 @@ function deleteSubmit() {
         url: form.attr("action") + $("#deleteID").val(),
         data: form.serialize(),
         success: function () {
-            users = users.filter(user => user.id != $("#deleteID").val());
-            updateTable();
+            users = users.filter(user => user.id !== $("#deleteID").val());
+            pullData();
         }
     })
 }
@@ -80,7 +80,7 @@ function addSubmit() {
             $("#all-tab").trigger("click");
             form.trigger("reset");
             users.push(response);
-            updateTable();
+            pullData();
         }
     })
 }
@@ -88,14 +88,14 @@ function addSubmit() {
 function updateTable() {
     $("#addRoles").empty();
     roles.forEach(role => {
-        $("#addRoles").append("<option value=" + role.name + ">" + role.name + "</option>");
+        $("#addRoles").append("<option value=" + role.name + ">" + role.name.slice(5) + "</option>");
     });
 
     $("#usersTable").empty();
     users.forEach(user => {
         $("#usersTable").append("<tr>" +
             "<td>" + user.id + "</td>" +
-            "<td>" + user.firstName + "</td>" +
+            "<td>" + user.name + "</td>" +
             "<td>" + user.lastName + "</td>" +
             "<td>" + user.age + "</td>" +
             "<td>" + user.username + "</td>" +
@@ -119,4 +119,5 @@ function pullData() {
         });
     });
 }
+
 pullData();
