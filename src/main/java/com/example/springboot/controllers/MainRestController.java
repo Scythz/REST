@@ -4,6 +4,9 @@ import com.example.springboot.models.Role;
 import com.example.springboot.models.User;
 import com.example.springboot.service.RoleService;
 import com.example.springboot.service.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -22,40 +25,42 @@ public class MainRestController {
     }
 
     @GetMapping("/api/user")
-    public User getCurrentUser(Principal principal) {
-        return (User) userService.loadUserByUsername(principal.getName());
+    public ResponseEntity<User> getCurrentUser(Principal principal) {
+        return new ResponseEntity<>((User) userService.loadUserByUsername(principal.getName()), HttpStatus.OK);
+
     }
 
     @GetMapping("/api/admin/users")
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
+    public ResponseEntity<List<User>> getAllUsers() {
+        return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
     }
 
     @GetMapping("/api/admin/roles")
-    public Set<Role> getAllRoles() {
-        return roleService.getRoles();
+    public ResponseEntity<Set<Role>> getAllRoles() {
+        return new ResponseEntity<>(roleService.getRoles(), HttpStatus.OK);
     }
 
     @GetMapping("/api/admin/users/{id}")
-    public User getUser(@PathVariable int id) {
-        return userService.getUserById(id);
+    public ResponseEntity<User> getUser(@PathVariable int id) {
+        return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);
     }
 
     @PostMapping("/api/admin/")
-    public User saveUser(@ModelAttribute("user") User user,
-                         @RequestParam(value = "selectedRoles", required = false) String[] roles) {
-        return userService.saveUser(user, roles);
+    public ResponseEntity<User> saveUser(@RequestBody User user) {
+        userService.saveUser(user);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/api/admin/{id}")
-    public void deleteUser(@PathVariable("id") int id) {
+    public ResponseEntity<User> deleteUser(@PathVariable("id") int id) {
         userService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping("/api/admin/")
-    public User editUser(@ModelAttribute User user,
-                         @RequestParam(value = "selectedRoles", required = false) String[] roles) {
-        return userService.updateUser(user, roles);
+    @PatchMapping("/api/admin/{id}")
+    public ResponseEntity<User> editUser(@RequestBody User user) {
+        userService.updateUser(user);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
