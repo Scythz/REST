@@ -157,7 +157,7 @@ document.getElementById('newUserForm').addEventListener('submit', (e) => {
     const selectedOpts = [...document.getElementById('newRoles').options]
         .filter(x => x.selected)
         .map(x => x.value);
-
+    console.log(selectedOpts)
     selectedOpts.forEach(
         role => {
             rolesJ.push(rolesArr[role - 1])
